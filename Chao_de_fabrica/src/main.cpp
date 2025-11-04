@@ -1,18 +1,59 @@
 #include <Arduino.h>
+#include <DHT.h>
+#include <WiFi.h>
+#include <ultrasonic.h>
+#include <esp_now.h>
 
-// put function declarations here:
-int myFunction(int, int);
+
+uint8_t monitorMac[] = {0x98, 0x88, 0xE8, 0x04, 0x38, 0xBC}; // Substitua pelos últimos bytes do MAC do monitor
+
+//definições de pinos
+#define DHTTYPE DHT11
+#define DHTpin  25
+const int LDRpin = 34;
+const int PIRpin = 14;
+const int LEDRed = 12;
+const int LEDGreen = 13;
+const int Trig = 26;
+const int Echo = 27;
+
+//definiçôes de bibliotecas
+Ultrasonic ultrasonic(Trig, Echo);
+DHT dht(DHTpin, DHTTYPE);
+
+struct Data{
+  float temperature;
+  float humidity;
+  int lightLevel;
+  int presence;
+  float distance;
+};
+
+esp_now_peer_info_t peerInfo;  // Cria uma estrutura esp_now_peer_info_t, que é utilizada para registrar informações sobre um peer (dispositivo) que será adicionado à rede ESPNOW
+
+Data Datatosend = {
+  .temperature = dht.readTemperature(),
+  .humidity = dht.readHumidity(),
+  .lightLevel = analogRead(LDRpin),
+  .presence = digitalRead(PIRpin),
+  .distance = ultrasonic.read()
+};
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+ Serial.begin(115200);
+ pinMode(LDRpin, INPUT);
+ pinMode(PIRpin, INPUT);
+ pinMode(LEDRed, OUTPUT);
+ pinMode(LEDGreen, OUTPUT);
+
+ dht.begin();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  float humidity = dht.readHumidity();
+  float temperature = dht.readTemperature();
+  int LDRvalue = analogRead(LDRpin);
+  int presence = digitalRead(PIRpin);
+
 }
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
-}
