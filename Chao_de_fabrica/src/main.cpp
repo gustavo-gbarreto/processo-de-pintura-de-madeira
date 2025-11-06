@@ -21,6 +21,9 @@ const int Echo = 27;
 Ultrasonic ultrasonic(Trig, Echo);
 DHT dht(DHTpin, DHTTYPE);
 
+bool Alert = false;
+
+
 struct Data{
   float temperature;
   float humidity;
@@ -45,15 +48,43 @@ void setup() {
  pinMode(PIRpin, INPUT);
  pinMode(LEDRed, OUTPUT);
  pinMode(LEDGreen, OUTPUT);
+ pinMode(Trig, OUTPUT);
+ pinMode(Echo, INPUT);
 
  dht.begin();
+
 }
 
 void loop() {
-  float humidity = dht.readHumidity();
-  float temperature = dht.readTemperature();
+  /* float humidity = dht.readHumidity();
+  
   int LDRvalue = analogRead(LDRpin);
+*/
+  float temperature = dht.readTemperature();
   int presence = digitalRead(PIRpin);
+  float distance = ultrasonic.read();
 
+  if(distance < 20){
+    digitalWrite(LEDRed, HIGH);
+    digitalWrite(LEDGreen, LOW);
+    Alert != Alert;
+  }
+  else{
+    digitalWrite(LEDRed, LOW);
+    digitalWrite(LEDGreen, HIGH);
+  }
+
+  float temperatperature();
+  float humidity = dht.readHumidity();
+
+
+  Serial.println("-------------------------------------------------------------");
+  Serial.print("Sistema: "); Serial.println(Alert = true ? "ALERTA! Verificar nível do tanque" : "Operação normal"); 
+  Serial.print("Nível do tanque: "); Serial.print(distance); Serial.println(" %");
+  Serial.print("Temperatura: "); Serial.print(temperature); Serial.print(" °C | ");
+  Serial.print("Umidade: "); Serial.print(humidity); Serial.println(" %");
+  Serial.print("Luminosidade: "); Serial.println(analogRead(LDRpin));
+  Serial.print("Presença: "); Serial.println(presence == HIGH ? "Presença detectada" : "Sem presença");
+  Serial.println("-------------------------------------------------------------");
 }
 

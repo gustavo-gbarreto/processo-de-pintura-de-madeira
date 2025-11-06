@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"name": "Chao_de_fabrica",
+			"path": ".."
+		},
+		{
+			"name": "Monitoramento",
+			"path": "../../Monitoramento"
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true,
+		"files.associations": {
+			"iterator": "cpp"
+		}
+	}
+}
