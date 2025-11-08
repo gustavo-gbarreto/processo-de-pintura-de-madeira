@@ -9,13 +9,13 @@ uint8_t monitorMac[] = {0x98, 0x88, 0xE8, 0x04, 0x38, 0xBC}; // Substitua pelos 
 
 //definições de pinos
 #define DHTTYPE DHT11
-#define DHTpin  25
-const int LDRpin = 34;
-const int PIRpin = 14;
-const int LEDRed = 12;
-const int LEDGreen = 13;
-const int Trig = 26;
-const int Echo = 27;
+#define DHTpin  36
+const int LDRpin = 13;
+const int PIRpin = 1;
+const int LEDRed = 21;
+const int LEDGreen = 20;
+const int Trig = 38;
+const int Echo = 37;
 
 //definiçôes de bibliotecas
 Ultrasonic ultrasonic(Trig, Echo);
